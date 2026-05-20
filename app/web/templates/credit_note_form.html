@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Nueva nota credito{% endblock %}
+{% block content %}
+<h1>Nueva nota credito</h1>
+<form method="post" action="/credit-notes/new" class="form">
+  <label>Factura referencia</label>
+  <select name="invoice_id" required>
+    {% for inv in invoices %}
+    <option value="{{ inv.id }}">{{ inv.number }} ({{ inv.status }})</option>
+    {% endfor %}
+  </select>
+  <label>Producto</label>
+  <select name="product_id" required>
+    {% for p in products %}
+    <option value="{{ p.id }}">{{ p.name }}</option>
+    {% endfor %}
+  </select>
+  <label>Cantidad</label>
+  <input type="number" name="quantity" step="0.01" min="0.01" value="1" required>
+  <label>Fecha</label>
+  <input type="date" name="issue_date" value="{{ today }}" required>
+  <label>Codigo motivo (TODO-DIAN catalogo)</label>
+  <input type="text" name="reason_code" value="1" maxlength="10">
+  <label>Descripcion motivo</label>
+  <input type="text" name="reason_text">
+  <button type="submit">Crear nota credito</button>
+</form>
+{% endblock %}

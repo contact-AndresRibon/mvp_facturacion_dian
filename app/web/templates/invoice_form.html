@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Nueva factura{% endblock %}
+{% block page_title %}Nueva factura{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post" action="/invoices/new" class="form">
+    <label>Cliente (tercero)</label>
+    <select name="customer_id" required>
+      {% for c in customers %}
+      <option value="{{ c.id }}">{{ c.name }} ({{ c.document_number }})</option>
+      {% endfor %}
+    </select>
+    <label>Producto</label>
+    <select name="product_id" required>
+      {% for p in products %}
+      <option value="{{ p.id }}">{{ p.name }} - ${{ p.unit_price }} (IVA {{ p.tax_rate }}%)</option>
+      {% endfor %}
+    </select>
+    <label>Cantidad</label>
+    <input type="number" name="quantity" step="0.01" min="0.01" value="1" required>
+    <label>Fecha emision</label>
+    <input type="date" name="issue_date" value="{{ today }}" required>
+    <label>Forma de pago</label>
+    <select name="payment_method">
+      {% for pm in payment_methods %}
+      <option value="{{ pm.value }}">{{ pm.value }}</option>
+      {% endfor %}
+    </select>
+    <label>Moneda</label>
+    <select name="currency">
+      <option value="COP">COP</option>
+      <option value="USD">USD</option>
+    </select>
+    <label>Notas</label>
+    <textarea name="notes" rows="2"></textarea>
+    <div class="actions"><button type="submit" class="btn">Crear factura</button></div>
+  </form>
+</div>
+{% endblock %}

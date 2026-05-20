@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Configuracion{% endblock %}
+{% block page_title %}Configuracion de facturacion{% endblock %}
+{% block content %}
+<div class="panel">
+  <p>Empresa: <strong>{{ tenant.legal_name }}</strong> — NIT {{ tenant.nit }}</p>
+  <form method="post" action="/settings/billing" class="form">
+    <label>Prefijo facturas</label>
+    <input type="text" name="invoice_prefix" value="{{ tenant.invoice_prefix or 'SETT' }}">
+    <label>Prefijo notas credito</label>
+    <input type="text" name="credit_note_prefix" value="{{ tenant.credit_note_prefix or 'NC' }}">
+    <label>Prefijo notas debito</label>
+    <input type="text" name="debit_note_prefix" value="{{ tenant.debit_note_prefix or 'ND' }}">
+    <label>Resolucion DIAN (TODO-DIAN)</label>
+    <input type="text" name="resolution_number" value="{{ tenant.resolution_number or '' }}">
+    <div class="actions"><button type="submit" class="btn">Guardar configuracion</button></div>
+  </form>
+</div>
+{% endblock %}

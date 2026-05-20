@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Factura {{ invoice.number }}{% endblock %}
+{% block content %}
+<h1>Factura {{ invoice.number }}</h1>
+<p>Estado: <span class="badge">{{ invoice.status }}</span></p>
+<p>Cliente ID: {{ invoice.customer_id }}</p>
+<p>Subtotal: {{ invoice.subtotal }} | IVA: {{ invoice.tax_total }} | Total: {{ invoice.total }}</p>
+{% if invoice.cufe %}<p>CUFE (mock): <code>{{ invoice.cufe[:32] }}...</code></p>{% endif %}
+
+<div class="actions">
+  {% if invoice.status == 'draft' %}
+  <form method="post" action="/invoices/{{ invoice.id }}/sign" style="display:inline">
+    <button type="submit">Firmar (mock)</button>
+  </form>
+  {% endif %}
+  {% if invoice.status == 'signed' %}
+  <form method="post" action="/invoices/{{ invoice.id }}/submit-dian" style="display:inline">
+    <button type="submit">Enviar a DIAN (mock)</button>
+  </form>
+  {% endif %}
+  <a class="btn" href="/api/v1/invoices/{{ invoice.id }}/pdf">Descargar PDF</a>
+</div>
+
+<h2>Lineas</h2>
+<table>
+  <thead><tr><th>Descripcion</th><th>Cant.</th><th>Total</th></tr></thead>
+  <tbody>
+    {% for line in invoice.lines %}
+    <tr>
+      <td>{{ line.description }}</td>
+      <td>{{ line.quantity }}</td>
+      <td>{{ line.line_total }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Historial</h2>
+<ul class="events">
+  {% for e in events %}
+  <li>{{ e.created_at }} - {{ e.event_type }} ({{ e.from_status }} -> {{ e.to_status }})</li>
+  {% else %}
+  <li>Sin eventos</li>
+  {% endfor %}
+</ul>
+{% endblock %}

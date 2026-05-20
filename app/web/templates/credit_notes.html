@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Notas credito{% endblock %}
+{% block page_title %}Notas credito{% endblock %}
+{% block top_actions %}<a class="btn" href="/credit-notes/new">+ Nueva nota credito</a>{% endblock %}
+{% block content %}
+<div class="panel">
+  <table>
+    <thead><tr><th>Numero</th><th>Estado</th><th>Total</th></tr></thead>
+    <tbody>
+      {% for cn in credit_notes %}
+      <tr>
+        <td>{{ cn.number }}</td>
+        <td><span class="badge badge-{{ cn.status }}">{{ cn.status }}</span></td>
+        <td>${{ "{:,.0f}".format(cn.total) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

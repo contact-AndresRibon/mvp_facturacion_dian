@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block top_actions %}
+<a class="btn" href="/invoices/new">+ Nueva factura</a>
+{% endblock %}
+{% block content %}
+<div class="cards">
+  <div class="card">
+    <div class="card-label">Ventas hoy</div>
+    <div class="card-value green">${{ "{:,.0f}".format(dashboard.sales_today) }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Ventas del mes</div>
+    <div class="card-value green">${{ "{:,.0f}".format(dashboard.sales_month) }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Facturas totales</div>
+    <div class="card-value">{{ dashboard.total_invoices }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Borradores</div>
+    <div class="card-value">{{ dashboard.drafts_count }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Aceptadas DIAN</div>
+    <div class="card-value">{{ dashboard.accepted_count }}</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Top productos vendidos</h2>
+  <table>
+    <thead><tr><th>Producto</th><th>Cantidad</th><th>Total ventas</th></tr></thead>
+    <tbody>
+      {% for p in dashboard.top_products %}
+      <tr>
+        <td>{{ p.description }}</td>
+        <td>{{ p.quantity_sold }}</td>
+        <td>${{ "{:,.0f}".format(p.total_sales) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">Sin datos de ventas aun</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <h2>Ultimas facturas</h2>
+  <table>
+    <thead><tr><th>Numero</th><th>Estado</th><th>Total</th><th></th></tr></thead>
+    <tbody>
+      {% for inv in invoices %}
+      <tr>
+        <td>{{ inv.number }}</td>
+        <td><span class="badge badge-{{ inv.status }}">{{ inv.status }}</span></td>
+        <td>${{ "{:,.0f}".format(inv.total) }}</td>
+        <td><a href="/invoices/{{ inv.id }}">Ver</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

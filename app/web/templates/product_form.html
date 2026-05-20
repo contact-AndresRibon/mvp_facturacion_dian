@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Nuevo producto{% endblock %}
+{% block page_title %}Nuevo producto{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post" action="/products/new" class="form">
+    <label>Codigo</label>
+    <input type="text" name="code" required>
+    <label>Nombre</label>
+    <input type="text" name="name" required>
+    <label>Precio unitario</label>
+    <input type="number" name="unit_price" step="0.01" min="0" required>
+    <label>IVA %</label>
+    <input type="number" name="tax_rate" value="19" step="0.01" min="0" max="100">
+    <div class="actions"><button type="submit" class="btn">Guardar producto</button></div>
+  </form>
+</div>
+{% endblock %}

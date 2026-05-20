@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Reportes{% endblock %}
+{% block page_title %}Reportes de ventas{% endblock %}
+{% block content %}
+<div class="cards">
+  <div class="card">
+    <div class="card-label">Ventas del mes (aceptadas/firmadas)</div>
+    <div class="card-value green">${{ "{:,.0f}".format(sales.total_sales) }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Facturas en periodo</div>
+    <div class="card-value">{{ sales.invoice_count }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">IVA del periodo</div>
+    <div class="card-value">${{ "{:,.0f}".format(sales.tax_total) }}</div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Top productos (mes actual)</h2>
+  <table>
+    <thead><tr><th>Producto</th><th>Cantidad</th><th>Total</th></tr></thead>
+    <tbody>
+      {% for p in top_products %}
+      <tr>
+        <td>{{ p.description }}</td>
+        <td>{{ p.quantity_sold }}</td>
+        <td>${{ "{:,.0f}".format(p.total_sales) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Notas debito{% endblock %}
+{% block page_title %}Notas debito{% endblock %}
+{% block top_actions %}<a class="btn" href="/debit-notes/new">+ Nueva nota debito</a>{% endblock %}
+{% block content %}
+<div class="panel">
+  <table>
+    <thead><tr><th>Numero</th><th>Estado</th><th>Total</th></tr></thead>
+    <tbody>
+      {% for dn in debit_notes %}
+      <tr>
+        <td>{{ dn.number }}</td>
+        <td><span class="badge badge-{{ dn.status }}">{{ dn.status }}</span></td>
+        <td>${{ "{:,.0f}".format(dn.total) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">Sin notas debito</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

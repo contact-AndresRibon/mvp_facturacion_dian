@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Nuevo tercero{% endblock %}
+{% block page_title %}Nuevo tercero{% endblock %}
+{% block content %}
+<div class="panel">
+  <form method="post" action="/customers/new" class="form">
+    <label>Tipo documento</label>
+    <select name="document_type" required>
+      <option value="NIT">NIT</option>
+      <option value="CC">CC</option>
+      <option value="CE">CE</option>
+    </select>
+    <label>Numero documento</label>
+    <input type="text" name="document_number" required>
+    <label>Nombre / Razon social</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email">
+    <div class="actions"><button type="submit" class="btn">Guardar tercero</button></div>
+  </form>
+</div>
+{% endblock %}

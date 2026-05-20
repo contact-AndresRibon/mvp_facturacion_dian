@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Facturas{% endblock %}
+{% block page_title %}Facturas{% endblock %}
+{% block top_actions %}<a class="btn" href="/invoices/new">+ Nueva factura</a>{% endblock %}
+{% block content %}
+<form method="get" class="filters panel">
+  <div>
+    <label>Buscar numero</label>
+    <input type="text" name="search" value="{{ filter_search }}">
+  </div>
+  <div>
+    <label>Estado</label>
+    <select name="status">
+      <option value="">Todos</option>
+      <option value="draft" {% if filter_status == 'draft' %}selected{% endif %}>Borrador</option>
+      <option value="signed" {% if filter_status == 'signed' %}selected{% endif %}>Firmada</option>
+      <option value="accepted" {% if filter_status == 'accepted' %}selected{% endif %}>Aceptada</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-sm">Filtrar</button>
+</form>
+<div class="panel">
+  <table>
+    <thead><tr><th>Numero</th><th>Estado</th><th>Total</th><th>Fecha</th><th></th></tr></thead>
+    <tbody>
+      {% for inv in invoices %}
+      <tr>
+        <td>{{ inv.number }}</td>
+        <td><span class="badge badge-{{ inv.status }}">{{ inv.status }}</span></td>
+        <td>${{ "{:,.0f}".format(inv.total) }}</td>
+        <td>{{ inv.issue_date }}</td>
+        <td><a href="/invoices/{{ inv.id }}">Detalle</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

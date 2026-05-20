@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Facturacion Electronica{% endblock %}</title>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="app-body">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">F</span>
+      <span class="brand-text">FacturaDIAN</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/" class="nav-item {% if active == 'dashboard' %}active{% endif %}">Dashboard</a>
+      <a href="/invoices" class="nav-item {% if active == 'invoices' %}active{% endif %}">Facturas</a>
+      <a href="/credit-notes" class="nav-item {% if active == 'credit_notes' %}active{% endif %}">Notas credito</a>
+      <a href="/debit-notes" class="nav-item {% if active == 'debit_notes' %}active{% endif %}">Notas debito</a>
+      <a href="/customers" class="nav-item {% if active == 'customers' %}active{% endif %}">Terceros</a>
+      <a href="/products" class="nav-item {% if active == 'products' %}active{% endif %}">Productos</a>
+      <a href="/reports" class="nav-item {% if active == 'reports' %}active{% endif %}">Reportes</a>
+      <a href="/settings/billing" class="nav-item {% if active == 'settings' %}active{% endif %}">Configuracion</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/docs" target="_blank" class="nav-item">API Docs</a>
+      <a href="/logout" class="nav-item">Salir</a>
+    </div>
+  </aside>
+  <div class="main-wrap">
+    <header class="topbar">
+      <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
+      {% block top_actions %}{% endblock %}
+    </header>
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
