@@ -30,6 +30,7 @@ from app.models.document_event import DocumentEvent
 from app.models.invoice import Invoice, InvoiceLine
 from app.models.tenant import Tenant
 from app.models.user import User
+from app.services.events import record_event
 from app.storage.local_storage import LocalDocumentStorage
 from app.workers.tasks import (
     submit_credit_note_to_dian,
@@ -52,17 +53,16 @@ class DocumentWorkflowService:
         user_id: UUID | None,
         event_metadata: dict[str, Any] | None = None,
     ) -> None:
-        session.add(
-            DocumentEvent(
-                tenant_id=tenant_id,
-                document_type=document_type,
-                document_id=document_id,
-                event_type=event_type,
-                from_status=from_status,
-                to_status=to_status,
-                user_id=user_id,
-                event_metadata=event_metadata,
-            )
+        record_event(
+            session,
+            tenant_id=tenant_id,
+            document_type=document_type,
+            document_id=document_id,
+            event_type=event_type,
+            from_status=from_status,
+            to_status=to_status,
+            event_metadata=event_metadata,
+            user_id=user_id,
         )
 
     @staticmethod
